@@ -1,10 +1,10 @@
 <template>
-    <v-card width="200" tile>
+    <v-card width="200" tile v-if="this.categories">
         <v-list flat outlined dense>
-            <v-subheader>Categories</v-subheader>
+            <v-subheader>Categories {{this.filters}}</v-subheader>
             <v-list-item-group
-                @change="onChange($event)"
-                v-model="categoryFilters"
+                @change="this.onFilterChange"
+                :v-model="this.filters"
                 multiple
                 active-class=""
             >
@@ -31,16 +31,17 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import ProductGridItem from './productGridItem.vue';
 
 @Component
 export default class FilterSidebar extends Vue {
     @Prop({ required: true })
     categories!: string[];
-    categoryFilters = [];
 
-    onChange(event: any) {
-        console.log(event);
+    @Prop({ required: true, default: []})
+    filters!: number[];
+
+    onFilterChange(filters: number[]) {
+        this.$emit('onFilterChange', filters);
     }
 }
 </script>

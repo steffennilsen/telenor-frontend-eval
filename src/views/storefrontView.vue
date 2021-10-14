@@ -1,6 +1,10 @@
 <template>
     <div v-if="products">
-        <filter-sidebar :categories="this.categories"></filter-sidebar>
+        <filter-sidebar
+            :categories="this.categories"
+            :filters="this.filters"
+            @onFilterChange="onFilterChange"
+        ></filter-sidebar>
         <product-grid :products="this.products"></product-grid>
     </div>
 </template>
@@ -15,6 +19,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class StorefrontView extends Vue {
     products: ProductData[] | null = null;
     categories: string[] | null = null;
+    filters: number[] = [];
 
     created() {
         productService.getAllProducts().then((products) => {
@@ -22,6 +27,10 @@ export default class StorefrontView extends Vue {
             this.products = products;
             this.categories = productService.getProductCategories(products);
         });
+    }
+
+    onFilterChange(filters: number[]) {
+        this.filters = filters.sort();
     }
 }
 </script>
