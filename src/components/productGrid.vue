@@ -1,17 +1,16 @@
 <template>
     <v-container>
-        {{ this.products.length }}
         <v-row
-            v-for="row in Math.ceil(this.products.length / this.COLS_PER_ROW)"
-            :key="row"
+            v-for="row in Math.ceil(this.products.length / this.cols)"
+            :key="row" :cols="cols" no-gutters
         >
-            <v-col v-for="product in productCol(row)" :key="product.id">
-                <template v-if="product">
-                    <div>
-                        {{ product.title }}
-                    </div>
-                </template>
-            </v-col>
+            <template v-if="row">
+                <v-col v-for="product in productCol(row)" :key="product.id">
+                    <template v-if="product">
+                        <product-grid-item :product="product"></product-grid-item>
+                    </template>
+                </v-col>
+            </template>
         </v-row>
     </v-container>
 </template>
@@ -19,22 +18,23 @@
 <script lang="ts">
 import { ProductData } from '@/services/productService';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import Product from './product.vue';
+import ProductGridItem from './productGridItem.vue';
 
-@Component({ components: { Product } })
+@Component({ components: { ProductGridItem } })
 export default class ProductGrid extends Vue {
-    @Prop()
+    @Prop({required: true})
     products!: ProductData[];
 
-    COLS_PER_ROW = 6; // static atm
+    cols = 4; // static atm
+    colWidth = 2; // static atm
 
     /**
      * @param row Vue seems to start for index on 1, be aware
      */
     productCol(row: number): ProductData[] {
         const list: ProductData[] = [];
-        const base = (row - 1) * this.COLS_PER_ROW;
-        for (let i = 0; i < this.COLS_PER_ROW; i++) {
+        const base = (row - 1) * this.cols;
+        for (let i = 0; i < this.cols; i++) {
             const product = this.products[base + i];
             if (product) {
                 list.push(this.products[base + i]);
