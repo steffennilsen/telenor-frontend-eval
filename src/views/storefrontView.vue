@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import ProductGrid from '@/components/productGrid.vue';
-import { productService, Product } from '@/services/productService';
+import { productService, ProductData } from '@/services/productService';
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component({ components: { ProductGrid } })
 export default class StorefrontView extends Vue {
-    products: Product[] | null = null;
+    products: ProductData[] | null = null;
 
     created() {
         productService

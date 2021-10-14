@@ -6,7 +6,7 @@ export interface ProductRating {
     count: number;
 }
 
-export interface Product {
+export interface ProductData {
     category: string;
     description: string;
     id: number;
@@ -18,7 +18,7 @@ export interface Product {
 
 class ProductService {
     async getAllProducts() {
-        return fetch(PRODUCTS_URL).then((res) => res.json()) as Promise<Product[]>;
+        return fetch(PRODUCTS_URL).then((res) => res.json()) as Promise<ProductData[]>;
     }
 }
 
