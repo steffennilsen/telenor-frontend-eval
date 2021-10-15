@@ -1,5 +1,8 @@
 <template>
   <v-toolbar dark color="blue">
+    <v-btn icon @click="goHome">
+      <v-icon>home</v-icon>
+    </v-btn>
     <v-autocomplete
       v-model="select"
       :loading="loading"
@@ -17,9 +20,6 @@
       :item-value="itemValue"
       @change="selectItem"
     ></v-autocomplete>
-    <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
-    </v-btn>
   </v-toolbar>
 </template>
 
@@ -83,6 +83,14 @@ export default class Searchbar extends Vue {
       name: ROUTE_NAMES.product,
       params: { id },
     });
+  }
+
+  goHome() {
+    if (this.$router.currentRoute.name !== ROUTE_NAMES.storefront) {
+      this.$router.push({
+        name: ROUTE_NAMES.storefront,
+      });
+    }
   }
 }
 </script>
