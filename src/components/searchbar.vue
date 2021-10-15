@@ -20,6 +20,9 @@
       :item-value="itemValue"
       @change="selectItem"
     ></v-autocomplete>
+    <v-btn icon @click="goHome">
+      <v-icon>shopping_cart</v-icon>
+    </v-btn>
   </v-toolbar>
 </template>
 

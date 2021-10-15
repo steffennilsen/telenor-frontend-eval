@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid grid-list-sm>
+    <v-container fluid grid-list-sm fill-height>
       <v-layout row wrap>
         <v-flex v-for="product in this.products" :key="product.id" xs4>
           <template
