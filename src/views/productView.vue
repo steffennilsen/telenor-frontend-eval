@@ -22,14 +22,24 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { productService, ProductData } from '@/services/productService';
 import Searchbar from '@/components/searchbar.vue';
+import { NavigationGuardNext, Route } from 'vue-router';
 
-@Component({components: {Searchbar}})
+@Component({
+  components: { Searchbar },
+  beforeRouteUpdate: function (to, from, next) {
+    (this as ProductView).updateProduct(to.params.id);
+    next();
+  },
+})
 export default class ProductView extends Vue {
-  id = this.$route.params.id;
   product: ProductData | null = null;
 
   created() {
-    productService.getProduct(this.id).then((product) => {
+    this.updateProduct(this.$route.params.id);
+  }
+
+  updateProduct(id: string) {
+    productService.getProduct(id).then((product) => {
       this.product = product;
     });
   }
