@@ -1,18 +1,17 @@
 <template>
-    <v-container>
-        <v-row
-            v-for="row in Math.ceil(this.products.length / this.cols)"
-            :key="row" :cols="cols" no-gutters
-        >
-            <template v-if="row">
-                <v-col v-for="product in productCol(row)" :key="product.id">
-                    <template v-if="product">
-                        <product-grid-item :product="product"></product-grid-item>
-                    </template>
-                </v-col>
-            </template>
-        </v-row>
+  <div>
+    <v-container fluid grid-list-sm>
+      <v-layout row wrap>
+        <v-flex v-for="product in this.products" :key="product.id" xs4>
+          <template
+            v-if="filters.length === 0 || filters.includes(categories.indexOf(product.category))"
+          >
+            <product-grid-item :product="product"></product-grid-item>
+          </template>
+        </v-flex>
+      </v-layout>
     </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -22,26 +21,15 @@ import ProductGridItem from './productGridItem.vue';
 
 @Component({ components: { ProductGridItem } })
 export default class ProductGrid extends Vue {
-    @Prop({required: true})
-    products!: ProductData[];
+  @Prop({ required: true })
+  products!: ProductData[];
 
-    cols = 4; // static atm
-    colWidth = 2; // static atm
+  @Prop({ required: true, default: [] })
+  filters!: number[];
 
-    /**
-     * @param row Vue seems to start for index on 1, be aware
-     */
-    productCol(row: number): ProductData[] {
-        const list: ProductData[] = [];
-        const base = (row - 1) * this.cols;
-        for (let i = 0; i < this.cols; i++) {
-            const product = this.products[base + i];
-            if (product) {
-                list.push(this.products[base + i]);
-            }
-        }
-        return list;
-    }
+  /** unhappy with this for the moment, but time constraints */
+  @Prop({ required: true, default: () => [] })
+  categories!: string[];
 }
 </script>
 

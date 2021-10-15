@@ -1,12 +1,24 @@
 <template>
-    <div v-if="products">
-        <filter-sidebar
+  <div v-if="products">
+    <v-container>
+      <v-row>
+        <v-col cols="2">
+          <filter-sidebar
             :categories="this.categories"
             :filters="this.filters"
             @onFilterChange="onFilterChange"
-        ></filter-sidebar>
-        <product-grid :products="this.products"></product-grid>
-    </div>
+          ></filter-sidebar>
+        </v-col>
+        <v-col cols="10">
+          <product-grid
+            :products="this.products"
+            :filters="this.filters"
+            :categories="this.categories"
+          ></product-grid>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,21 +29,21 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 
 @Component({ components: { ProductGrid, FilterSidebar } })
 export default class StorefrontView extends Vue {
-    products: ProductData[] | null = null;
-    categories: string[] | null = null;
-    filters: number[] = [];
+  products: ProductData[] | null = null;
+  categories: string[] | null = null;
+  filters: number[] = [];
 
-    created() {
-        productService.getAllProducts().then((products) => {
-            console.log(products);
-            this.products = products;
-            this.categories = productService.getProductCategories(products);
-        });
-    }
+  created() {
+    productService.getAllProducts().then((products) => {
+      console.log(products);
+      this.products = products;
+      this.categories = productService.getProductCategories(products);
+    });
+  }
 
-    onFilterChange(filters: number[]) {
-        this.filters = filters.sort();
-    }
+  onFilterChange(filters: number[]) {
+    this.filters = filters.sort();
+  }
 }
 </script>
 

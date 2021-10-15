@@ -1,7 +1,7 @@
 <template>
     <v-card width="200" tile v-if="this.categories">
         <v-list flat outlined dense>
-            <v-subheader>Categories {{this.filters}}</v-subheader>
+            <v-subheader>Categories</v-subheader>
             <v-list-item-group
                 @change="this.onFilterChange"
                 :v-model="this.filters"
