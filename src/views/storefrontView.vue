@@ -2,6 +2,9 @@
   <div v-if="products">
     <v-container>
       <v-row>
+        <searchbar></searchbar>
+      </v-row>
+      <v-row>
         <v-col cols="2">
           <filter-sidebar
             :categories="this.categories"
@@ -25,9 +28,10 @@
 import ProductGrid from '@/components/productGrid.vue';
 import { productService, ProductData } from '@/services/productService';
 import FilterSidebar from '@/components/filterSidebar.vue';
+import Searchbar from '@/components/searchbar.vue';
 import { Vue, Component, Prop } from 'vue-property-decorator';
 
-@Component({ components: { ProductGrid, FilterSidebar } })
+@Component({ components: { ProductGrid, FilterSidebar, Searchbar } })
 export default class StorefrontView extends Vue {
   products: ProductData[] | null = null;
   categories: string[] | null = null;
