@@ -39,7 +39,6 @@ export default class StorefrontView extends Vue {
 
   created() {
     productService.getAllProducts().then((products) => {
-      console.log(products);
       this.products = products;
       this.categories = productService.getProductCategories(products);
     });

@@ -12,6 +12,8 @@
       hide-details
       label="Search"
       solo-inverted
+      full-width
+      :item-text="itemText"
     ></v-autocomplete>
     <v-btn icon>
       <v-icon>mdi-dots-vertical</v-icon>
@@ -38,19 +40,35 @@ export default class Searchbar extends Vue {
     s && s !== this.select && this.query(s);
   }
 
-  query(s: string) {
+  async query(s: string) {
     this.loading = true;
+    const products = await productService.getAllProducts();
+    const items: Set<ProductData> = new Set();
 
-    productService.getAllProducts().then((products) => {
-      this.items = products.filter((product) => {
-        return (
-          (product.title || '').toLowerCase().indexOf((s || '').toLowerCase()) >
-          -1
-        );
-      });
+    // ['title', 'description'].forEach((field) => {
+    //   products
+    //     .filter((product) =>
+    //       product[field].toLowerCase().indexOf(s.toLowerCase())
+    //     )
+    //     .forEach((product) => items.add(product));
+    // });
 
-      this.loading = false;
-    });
+    products
+      .filter((product) => product.title.toLowerCase().indexOf(s.toLowerCase()))
+      .forEach((product) => items.add(product));
+
+    products
+      .filter((product) =>
+        product.description.toLowerCase().indexOf(s.toLowerCase())
+      )
+      .forEach((product) => items.add(product));
+
+    this.items = Array.from(items);
+    this.loading = false;
+  }
+
+  itemText(product: ProductData) {
+    return product.title;
   }
 }
 </script>
