@@ -1,14 +1,9 @@
 <template>
-  <v-card flat tile outlined @click="onClick">
-    <div class="imgcenter">
-      <v-img
-        :src="product.image"
-        contain
-        height="256"
-        width="256"
-      ></v-img>
+  <v-card flat tile outlined>
+    <div class="imgcenter" @click="toProductDetails">
+      <v-img :src="product.image" contain height="256" width="256"></v-img>
     </div>
-    <v-card-title>{{ product.title }}</v-card-title>
+    <v-card-title @click="toProductDetails"><a>{{ product.title }}</a></v-card-title>
     <v-spacer></v-spacer>
     <v-card-actions>
       <v-spacer></v-spacer>
@@ -27,7 +22,7 @@ export default class ProductGridItem extends Vue {
   @Prop({ required: true })
   product!: ProductData;
 
-  onClick() {
+  toProductDetails() {
     this.$router.push({
       name: ROUTE_NAMES.product,
       params: { id: `${this.product.id}` },
@@ -39,9 +34,9 @@ export default class ProductGridItem extends Vue {
 <style lang="sass" scoped>
 .v-card
     height: 100%
-    cursor: pointer
 
 .imgcenter
     text-align: center
     text-align: -webkit-center
+    cursor: pointer
 </style>
