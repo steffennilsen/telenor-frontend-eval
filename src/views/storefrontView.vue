@@ -1,25 +1,23 @@
 <template>
-  <div v-if="products">
-    <v-container>
-      <v-row><searchbar></searchbar></v-row>
-      <v-row>
-        <v-col cols="2">
-          <filter-sidebar
-            :categories="this.categories"
-            :filters="this.filters"
-            @onFilterChange="onFilterChange"
-          ></filter-sidebar>
-        </v-col>
-        <v-col cols="10">
-          <product-grid
-            :products="this.products"
-            :filters="this.filters"
-            :categories="this.categories"
-          ></product-grid>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+  <v-container>
+    <v-row><searchbar></searchbar></v-row>
+    <v-row v-if="products">
+      <v-col cols="2">
+        <filter-sidebar
+          :categories="this.categories"
+          :filters="this.filters"
+          @onFilterChange="onFilterChange"
+        ></filter-sidebar>
+      </v-col>
+      <v-col cols="10">
+        <product-grid
+          :products="this.products"
+          :filters="this.filters"
+          :categories="this.categories"
+        ></product-grid>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script lang="ts">
