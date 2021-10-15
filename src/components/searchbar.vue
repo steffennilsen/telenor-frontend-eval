@@ -14,6 +14,8 @@
       solo-inverted
       full-width
       :item-text="itemText"
+      :item-value="itemValue"
+      @change="selectItem"
     ></v-autocomplete>
     <v-btn icon>
       <v-icon>mdi-dots-vertical</v-icon>
@@ -24,6 +26,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { productService, ProductData } from '@/services/productService';
+import { ROUTE_NAMES } from '@/router';
 
 @Component
 export default class Searchbar extends Vue {
@@ -69,6 +72,17 @@ export default class Searchbar extends Vue {
 
   itemText(product: ProductData) {
     return product.title;
+  }
+
+  itemValue(product: ProductData) {
+    return product.id;
+  }
+
+  selectItem(id: string) {
+    this.$router.push({
+      name: ROUTE_NAMES.product,
+      params: { id },
+    });
   }
 }
 </script>

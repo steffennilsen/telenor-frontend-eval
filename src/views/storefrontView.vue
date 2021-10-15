@@ -1,9 +1,7 @@
 <template>
   <div v-if="products">
     <v-container>
-      <v-row>
-        <searchbar></searchbar>
-      </v-row>
+      <v-row><searchbar></searchbar></v-row>
       <v-row>
         <v-col cols="2">
           <filter-sidebar
