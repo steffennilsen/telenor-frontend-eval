@@ -1,5 +1,8 @@
 # telenor-frontend-eval
 
+### Notes
+Shopping cart not implemented
+
 ## Project setup
 ```
 npm install
